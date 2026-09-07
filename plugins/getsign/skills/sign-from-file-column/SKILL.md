@@ -1,7 +1,6 @@
 ---
 name: "sign-from-file-column"
-description: "Send a document that already sits in a monday.com board File column for signature, with no GetSign template: switch the workflow to Use stored document, point it at that File column, then map the signature fields on the item's own file and send. Use when someone says: 'sign the file that's already on the item'; 'use the document from the files column'; 'we upload contracts to a monday file column'; 'sign a stored document'; 'there's no template, the PDF is on the board'."
-when_to_use: "Starts with `getsign_list_workflows_for_board`. Needs `board_id` to begin; ask for what is missing rather than guessing."
+description: "Send a document that already sits in a monday.com board File column for signature, with no GetSign template: switch the workflow to Use stored document, point it at that File column, then map the signature fields on the item's own file and send. Use when someone says: 'sign the file that's already on the item'; 'use the document from the files column'; 'we upload contracts to a monday file column'; 'sign a stored document'; 'there's no template, the PDF is on the board'. Starts with `getsign_list_workflows_for_board`. Needs `board_id` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
   - mcp__plugin_getsign_getsign__getsign_list_workflows_for_board

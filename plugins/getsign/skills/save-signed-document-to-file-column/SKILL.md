@@ -1,7 +1,6 @@
 ---
 name: "save-signed-document-to-file-column"
-description: "Save a signed document into a monday.com File column: check whether the workflow's Signature collection or Generate document settings already do this automatically, and if not, download the signed PDF and hand it off to a connected monday API tool to attach it to the item's File column. Use when someone says: 'save the signed document in the files column'; 'save this to the file column'; 'attach the signed pdf to this item'; 'put the signed contract back on the board'; 'upload the signed doc to the files column'."
-when_to_use: "Starts with `getsign_download_signed_documents`. Needs `envelope_id`, `item_id` to begin; ask for what is missing rather than guessing."
+description: "Save a signed document into a monday.com File column: check whether the workflow's Signature collection or Generate document settings already do this automatically, and if not, download the signed PDF and hand it off to a connected monday API tool to attach it to the item's File column. Use when someone says: 'save the signed document in the files column'; 'save this to the file column'; 'attach the signed pdf to this item'; 'put the signed contract back on the board'; 'upload the signed doc to the files column'. Starts with `getsign_download_signed_documents`. Needs `envelope_id`, `item_id` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
   - mcp__plugin_getsign_getsign__getsign_download_signed_documents

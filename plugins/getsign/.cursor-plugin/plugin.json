@@ -1,13 +1,10 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "getsign",
   "displayName": "GetSign",
   "description": "Send documents for signature from monday.com boards in plain language. Upload and map a new document, onboard an account that has never installed GetSign, and chase who still hasn't signed — every step in the order the GetSign API actually requires. Built on the official GetSign MCP server.",
   "version": "1.1.0",
-  "defaultEnabled": false,
   "author": {
     "name": "Jetpack Work Labs",
-    "url": "https://getsign.io",
     "email": "support@getsign.io"
   },
   "homepage": "https://github.com/Jetpack-Work-Labs/getsign-mcp-plugin/tree/main/plugins/getsign",
@@ -24,5 +21,20 @@
     "documents",
     "signing",
     "audit-trail"
-  ]
+  ],
+  "category": "productivity",
+  "tags": [
+    "e-signature",
+    "monday.com",
+    "contracts",
+    "documents",
+    "automation"
+  ],
+  "logo": "assets/logo.svg",
+  "skills": "./skills/",
+  "mcpServers": {
+    "getsign": {
+      "url": "https://mcp.getsign.io/mcp"
+    }
+  }
 }

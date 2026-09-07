@@ -1,7 +1,6 @@
 ---
 name: "install-getsign-on-new-account"
-description: "Set up GetSign on a monday.com account for the first time: check whether the app is installed, hand the account admin a single link that covers both monday's install screen and OAuth consent, then confirm the connection works and add a GetSign board view. Use when someone says: 'set up getsign'; 'install getsign on monday'; 'connect my monday account to getsign'; 'getsign isn't installed'; 'onboard my account'."
-when_to_use: "Starts with `getsign_account`. Needs no prior context — safe to run cold."
+description: "Set up GetSign on a monday.com account for the first time: check whether the app is installed, hand the account admin a single link that covers both monday's install screen and OAuth consent, then confirm the connection works and add a GetSign board view. Use when someone says: 'set up getsign'; 'install getsign on monday'; 'connect my monday account to getsign'; 'getsign isn't installed'; 'onboard my account'. Starts with `getsign_account`. Needs no prior context — safe to run cold."
 license: "MIT"
 allowed-tools:
   - mcp__plugin_getsign_getsign__getsign_account
@@ -111,7 +110,7 @@ broken link — route it to an admin.
    - next `getsign_list_workflows_for_board`, `getsign_get_workflow`
    - failures: Needs a live AppFeatureBoardView named 'getsign board view' on the installed GetSign app version, and Monday scopes that allow creating board views.
 6. `getsign_create_workflow`
-   - **conditional — ask before calling this when a workflow already exists.** The `getsign_list_workflows_for_board` step above is a branch, not a formality: if it returned any workflow, do NOT silently reuse one and do NOT silently call this tool either. Present the existing workflow(s) (name + `envelope_id`) alongside a 'create a new workflow' option and ask the user to choose — call `getsign_get_workflow` on any they're considering to surface its settings first. Only call this tool if the user picks create; every call creates a brand-new envelope on the board with no dedup by name, so calling it unasked litters the board with duplicate workflows. Call it directly, without asking, only when the list came back empty.
+   - **conditional — ask before calling this when a workflow already exists.** The `getsign_list_workflows_for_board` step above is a branch, not a formality: if it returned any workflow, do NOT silently reuse one and do NOT silently call this tool either. Present the existing workflow(s) (name + `envelope_id`) alongside a 'create a new workflow' option and ask the user to choose — call `getsign_get_workflow` on any they're considering to surface its settings first. Only call this tool if the user picks create; every call creates a brand-new envelope on the board with no dedup by name, so calling it unasked litters the board with duplicate workflows. Call it directly, without asking, only when the list came back empty. Once it exists, always ask the two post_create_questions from the response before attaching anything: template workflow vs. Use stored document, and which optional features (if any) to enable.
    - requires `board_id`, `workflow_name`
    - next `getsign_ensure_board_view`, `getsign_select_template_for_workflow`, `getsign_get_workflow`
    - failures: MISSING_WORKFLOW_NAME: workflow_name was blank or whitespace-only, so nothing was created. Ask the user what to name the workflow — don't pick one yourself — then retry. The name shows on the monday board, so suggest the source document or agreement type (e.g. 'NDA - Acme Corp').

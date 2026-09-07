@@ -1,7 +1,6 @@
 ---
 name: "board-pending-signatures"
-description: "Find out who still hasn't signed across a monday.com board, then drill into one item's signing history and full audit trail to see where it stalled and who to chase. Use when someone says: 'who hasn't signed yet'; 'what's still pending signature'; 'chase outstanding signatures'; 'check signing status on this board'; 'is the contract signed yet'."
-when_to_use: "Starts with `getsign_status`. Needs `envelope_id+item_id for history, or board_id for board actions` to begin; ask for what is missing rather than guessing."
+description: "Find out who still hasn't signed across a monday.com board, then drill into one item's signing history and full audit trail to see where it stalled and who to chase. Use when someone says: 'who hasn't signed yet'; 'what's still pending signature'; 'chase outstanding signatures'; 'check signing status on this board'; 'is the contract signed yet'. Starts with `getsign_status`. Needs `envelope_id+item_id for history, or board_id for board actions` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
   - mcp__plugin_getsign_getsign__getsign_status

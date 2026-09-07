@@ -1,13 +1,38 @@
-# GetSign for Claude Code
+# GetSign for AI agents
 
 E-signatures on monday.com boards, driven from chat.
 
-## Install
+## Install — Claude Code
 
 ```
 /plugin marketplace add Jetpack-Work-Labs/getsign-mcp-plugin
 /plugin install getsign@getsign
 ```
+
+## Install — Cursor
+
+Add this repo under **Dashboard → Plugins → Add Marketplace → Import from
+Repo**, then install GetSign from **Customize → Plugins**. The repo root carries
+a `.cursor-plugin/marketplace.json` pointing at `plugins/getsign/`, so the
+nested layout imports the same way a root-level plugin would.
+
+Other [Agent Plugins](https://agent-plugins.org) 1.0 clients load
+`plugins/getsign/` unchanged — `plugin.json`, `mcp.json`, and `skills/` sit at
+its root, which is all the standard requires.
+
+Want the server without the skills? Add it as a plain MCP server in Cursor:
+
+```json
+{
+  "mcpServers": {
+    "getsign": { "url": "https://mcp.getsign.io/mcp" }
+  }
+}
+```
+
+Skills without the server import through **Customize → Rules → Add Rule →
+Remote Rule (GitHub)**; they land in `.cursor/skills/` and stay synced, but the
+tools they call still need the server above.
 
 ## Authenticate — required, and not automatic
 
