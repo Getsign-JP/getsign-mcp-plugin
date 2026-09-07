@@ -5,7 +5,7 @@ E-signatures on monday.com boards, driven from chat.
 ## Install — Claude Code
 
 ```
-/plugin marketplace add Jetpack-Work-Labs/getsign-mcp-plugin
+/plugin marketplace add Getsign-JP/getsign-mcp-plugin
 /plugin install getsign@getsign
 ```
 

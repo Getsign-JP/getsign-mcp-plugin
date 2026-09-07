@@ -7,8 +7,8 @@
     "name": "Jetpack Work Labs",
     "email": "support@getsign.io"
   },
-  "homepage": "https://github.com/Jetpack-Work-Labs/getsign-mcp-plugin/tree/main/plugins/getsign",
-  "repository": "https://github.com/Jetpack-Work-Labs/getsign-mcp-plugin",
+  "homepage": "https://github.com/Getsign-JP/getsign-mcp-plugin/tree/main/plugins/getsign",
+  "repository": "https://github.com/Getsign-JP/getsign-mcp-plugin",
   "license": "MIT",
   "keywords": [
     "getsign",

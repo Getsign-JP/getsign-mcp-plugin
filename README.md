@@ -3,14 +3,14 @@
 Claude Code plugin distribution repo for [GetSign](https://getsign.io) — e-signatures on monday.com boards, driven from chat.
 
 > [!IMPORTANT]
-> **Everything under `plugins/getsign/` and `.claude-plugin/` in this repo is generated** from the flow registry in the private [`getsign-mcp-server`](https://github.com/Jetpack-Work-Labs/getsign-mcp-server) repo and republished here by a one-way sync script. Nothing here is hand-edited except this file, `LICENSE`, and `.github/workflows/validate.yml`.
+> **Everything under `plugins/getsign/` and `.claude-plugin/` in this repo is generated** from the flow registry in the private [`getsign-mcp-server`](https://github.com/Jetpack-Work-Labs/getsign-mcp-server) repo and republished here by a one-way sync script. Nothing here is hand-edited except this file, `LICENSE`, `.github/workflows/validate.yml`, and the `Getsign-JP/getsign-mcp-plugin` slug in the `plugin.json` manifests and `plugins/getsign/README.md` — the generator still emits `Jetpack-Work-Labs/getsign-mcp-plugin`, so **a publish run into this repo reverts that slug and it has to be re-applied** until `PLUGIN_REPO_SLUG` in `getsign-mcp-server` is changed.
 >
 > **File issues on this repo — pull requests here will be silently overwritten by the next publish.** Fixes belong in `getsign-mcp-server` and flow back here through the normal generate → review → publish loop.
 
 ## Install
 
 ```
-/plugin marketplace add Jetpack-Work-Labs/getsign-mcp-plugin
+/plugin marketplace add Getsign-JP/getsign-mcp-plugin
 /plugin install getsign@getsign
 ```
 
