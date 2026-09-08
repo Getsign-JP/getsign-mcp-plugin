@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Points every install instruction and manifest link at `Getsign-JP/getsign-mcp-plugin`, the public home of this plugin.
+
 ## 1.1.0
 
 - Installs in Cursor: the same directory now ships Agent Plugins 1.0 (`plugin.json` + `mcp.json`) and Cursor (`.cursor-plugin/`) manifests alongside the Claude Code pair.

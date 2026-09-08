@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "getsign",
   "description": "Send documents for signature from monday.com boards in plain language. Upload and map a new document, onboard an account that has never installed GetSign, and chase who still hasn't signed — every step in the order the GetSign API actually requires. Built on the official GetSign MCP server.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "Jetpack Work Labs",
     "url": "https://getsign.io",
