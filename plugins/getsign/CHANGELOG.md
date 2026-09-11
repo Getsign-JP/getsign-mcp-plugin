@@ -7,7 +7,7 @@
 ## 1.1.2
 
 - Publishes under the GetSign name: the marketplace owner and the author block in all three manifests now read `GetSign` rather than the operating company.
-- Restores `appsupport@jetpackwork.com` as the contact address in the Claude Code and Cursor plugin manifests, where a merge had reverted it to an address that does not receive mail.
+- Restores `appsupport@jetpackwork.com` as the contact address in all three plugin manifests, where a merge had reverted it to an address that does not receive mail. The marketplace files were unaffected, which is why the listing looked right while every plugin manifest under it did not.
 
 ## 1.1.1
 
