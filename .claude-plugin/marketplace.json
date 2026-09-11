@@ -1,8 +1,8 @@
 {
   "name": "getsign",
-  "description": "Jetpack Work Labs plugins for monday.com — e-signatures and agentic QA.",
+  "description": "GetSign plugins for monday.com — e-signatures and agentic QA.",
   "owner": {
-    "name": "Jetpack Work Labs",
+    "name": "GetSign",
     "email": "appsupport@jetpackwork.com"
   },
   "plugins": [

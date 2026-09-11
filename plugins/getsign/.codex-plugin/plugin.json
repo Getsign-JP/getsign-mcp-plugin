@@ -1,0 +1,50 @@
+{
+  "name": "getsign",
+  "version": "1.2.0",
+  "description": "Send documents for signature from monday.com boards in plain language. Upload and map a new document, onboard an account that has never installed GetSign, and chase who still hasn't signed — every step in the order the GetSign API actually requires. Built on the official GetSign MCP server.",
+  "author": {
+    "name": "GetSign",
+    "url": "https://getsign.io",
+    "email": "appsupport@jetpackwork.com"
+  },
+  "homepage": "https://github.com/Getsign-JP/getsign-mcp-plugin/tree/main/plugins/getsign",
+  "repository": "https://github.com/Getsign-JP/getsign-mcp-plugin",
+  "license": "MIT",
+  "keywords": [
+    "getsign",
+    "monday",
+    "monday.com",
+    "e-signature",
+    "esignature",
+    "signature",
+    "contracts",
+    "documents",
+    "signing",
+    "audit-trail"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "GetSign",
+    "shortDescription": "E-signatures on monday.com boards",
+    "longDescription": "Send documents for signature from monday.com boards in plain language. Upload and map a new document, onboard an account that has never installed GetSign, and chase who still hasn't signed — every step in the order the GetSign API actually requires. Built on the official GetSign MCP server.",
+    "developerName": "GetSign",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://getsign.io",
+    "privacyPolicyURL": "https://getsign.io/privacy-policy",
+    "termsOfServiceURL": "https://getsign.io/terms-of-service",
+    "defaultPrompt": [
+      "Send the contract on this monday item for signature",
+      "Who hasn't signed yet on this board?",
+      "Set up GetSign on our monday.com account"
+    ],
+    "brandColor": "#0073EA",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}

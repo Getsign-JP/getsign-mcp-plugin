@@ -1,0 +1,20 @@
+{
+  "name": "getsign",
+  "interface": {
+    "displayName": "GetSign"
+  },
+  "plugins": [
+    {
+      "name": "getsign",
+      "source": {
+        "source": "local",
+        "path": "./plugins/getsign"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
