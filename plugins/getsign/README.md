@@ -16,6 +16,18 @@ Repo**, then install GetSign from **Customize → Plugins**. The repo root carri
 a `.cursor-plugin/marketplace.json` pointing at `plugins/getsign/`, so the
 nested layout imports the same way a root-level plugin would.
 
+## Install — Codex
+
+```
+codex plugin marketplace add Getsign-JP/getsign-mcp-plugin
+codex plugin add getsign@getsign
+```
+
+Inside a Codex session, `/plugins` opens the same browser: pick the **GetSign**
+marketplace tab, open GetSign, install, and press Space to enable it. Codex reads
+`plugins/getsign/.codex-plugin/plugin.json` and the repo-root
+`.agents/plugins/marketplace.json`.
+
 Other [Agent Plugins](https://agent-plugins.org) 1.0 clients load
 `plugins/getsign/` unchanged — `plugin.json`, `mcp.json`, and `skills/` sit at
 its root, which is all the standard requires.
@@ -46,6 +58,15 @@ monday.com account. No browser opens on install. In a fresh session:
 Select `getsign`, choose **Authenticate**, and complete the monday.com
 consent screen. You are done when `/mcp` shows `✔ Connected`.
 
+In Codex, the same step is:
+
+```
+codex mcp login getsign
+```
+
+`codex mcp list` then shows the server as authenticated rather than
+`Not logged in`.
+
 If your monday.com account has never had the GetSign app installed, an account
 admin has to click through monday's install screen once. The
 `/getsign:install-getsign-on-new-account` skill produces that link and
@@ -60,8 +81,8 @@ walks the rest.
 - `/getsign:sign-from-file-column` — Send a document that already sits in a monday.com board File column for signature, with no GetSign template: switch the workflow to Use stored document, point it at that File column, then map the signature fields on the item's own file and send.
 - `/getsign:save-signed-document-to-file-column` — Save a signed document into a monday.com File column: check whether the workflow's Signature collection or Generate document settings already do this automatically, and if not, download the signed PDF and hand it off to a connected monday API tool to attach it to the item's File column.
 
-Claude also loads these on its own when what you ask matches — you do not have
-to type the slash command.
+Your agent also loads these on its own when what you ask matches — you do not
+have to type the slash command.
 
 ## Already connected to GetSign MCP directly?
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0
+
+- First-class in Codex: ships OpenAI's `.codex-plugin/plugin.json` and a root `.agents/plugins/marketplace.json`, so `codex plugin marketplace add Getsign-JP/getsign-mcp-plugin` resolves GetSign's own listing — display name, category, and composer prompts — instead of falling back to the Claude-format index.
+
+## 1.1.2
+
+- Publishes under the GetSign name: the marketplace owner and the author block in all three manifests now read `GetSign` rather than the operating company.
+- Restores `appsupport@jetpackwork.com` as the contact address in the Claude Code and Cursor plugin manifests, where a merge had reverted it to an address that does not receive mail.
+
 ## 1.1.1
 
 - Points every install instruction and manifest link at `Getsign-JP/getsign-mcp-plugin`, the public home of this plugin.
