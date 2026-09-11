@@ -93,7 +93,9 @@ in), `outputFileType` (`pdf` or `docx`). Optional `documentNamingEnabled` +
 `documentNameTemplate` build the filename from static text and column values.
 
 This is generation, not signing — it produces a filled document whether or not
-anyone ever signs it.
+anyone ever signs it. It is **not** required for PDF `{{Column Title}}` /
+`{columnId}` fill: map those tags with `getsign_map_board_fields`; preview and
+signing already paint Monday values from the saved overlays.
 
 ### Signature collection — `signatureCollection`
 
