@@ -3,6 +3,7 @@
 ## 1.2.0
 
 - First-class in Codex: ships OpenAI's `.codex-plugin/plugin.json` and a root `.agents/plugins/marketplace.json`, so `codex plugin marketplace add Getsign-JP/getsign-mcp-plugin` resolves GetSign's own listing — display name, category, and composer prompts — instead of falling back to the Claude-format index.
+- Two steps added to the document flows, so the skills no longer stop short of a document that carries merge tags: `getsign_validate_document_placeholders` checks a DOCX's `{{Column Title}}` tokens once the template is on the workflow, and `getsign_map_board_fields` fills `{{Column Title}}` / `{columnId}` tags in a PDF from the item's Monday columns.
 
 ## 1.1.2
 
