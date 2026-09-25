@@ -13,8 +13,6 @@ allowed-tools:
   - mcp__getsign__getsign_ensure_board_view
   - mcp__plugin_getsign_getsign__getsign_create_workflow
   - mcp__getsign__getsign_create_workflow
-  - mcp__plugin_getsign_getsign__getsign_map_board_fields
-  - mcp__getsign__getsign_map_board_fields
   - mcp__plugin_getsign_getsign__getsign_get_document_url
   - mcp__getsign__getsign_get_document_url
   - mcp__plugin_getsign_getsign__getsign_get_signer_data
@@ -107,15 +105,15 @@ to add **signature / form** pads, and the user should choose:
 
 - **Manual** — `getsign_get_document_url(action="edit")` opens the PDF editor and they drag
   fields where they want them.
-- **AI-assisted** — `getsign_detect_placeholders_ai` finds the likely fields,
-  then `getsign_save_document_configuration` (`action=placeholders`) persists them.
+- **AI-assisted** — first tell them they can add context or just auto-detect.
+  Then `getsign_detect_placeholders_ai` (pass `intent` only if they gave context).
+  If the boxes are wrong they can describe the fix in text (`refine=true` +
+  `intent`) or start over (`force=true`). Persist with
+  `getsign_save_document_configuration` (`action=placeholders`).
 
-If the PDF contains `{{Column Title}}` or `{columnId}` tags, that is a **third**
-path: `getsign_map_board_fields`. Those tags are Monday content overlays, not
-signature pads. The backend measures their positions — never invent coordinates,
-and never put values in `text-box.content`. Generate-document automation is not
-required for fill. After mapping, open the editor to review. Unmatched tags:
-remap with `column_mappings` from `getsign_monday_item` `content_columns`.
+Printed `{{Column Title}}` or `{columnId}` tags are not rewritten. Do not invent
+coordinates or put Monday values in `text-box.content`. Map visual board fields
+and signature pads with AI detect → save, or the editor.
 
 Detection saves nothing on its own. Always follow it with the save step, and
 only then open the editor to review. Jumping from detection straight to the
@@ -149,10 +147,10 @@ single signer.
    - next `getsign_create_template`, `getsign_validate_document_placeholders`, `getsign_select_template_for_workflow`
    - failures: storage_key from call 1 must be reused verbatim in call 2 — it names the S3 object the PUT just wrote to. Skipping the PUT step (or PUT-ing to the wrong url) makes call 2 register a template pointing at empty/missing content with no error at either step.
 2. `getsign_validate_document_placeholders`
-   - DOCX only, and only once the template is on the workflow — right after getsign_create_template call 2 when envelope_id+item_id attached it, or after getsign_select_template_for_workflow / getsign_duplicate_template_for_workflow. Do not wait until send. Skip this step for PDFs.
+   - PDF or DOCX, and only once the template is on the workflow — right after getsign_create_template call 2 when envelope_id+item_id attached it, or after getsign_select_template_for_workflow / getsign_duplicate_template_for_workflow. Do not wait until send. If the PDF contains {board column id} tokens, offer a DOCX. If they choose DOCX, remove the PDF with getsign_delete_envelope_document first, then upload the DOCX and validate again. If they keep the PDF, warn that those placeholders may not be reflected as needed, then continue.
    - requires `file_id or template_id`, `envelope_id or board_id`
    - next `getsign_validate_document_placeholders`, `getsign_get_document_url`, `getsign_get_signer_data`
-   - failures: DOCX only. Ambiguous duplicate column titles are not auto-picked — pass mappings after the user chooses. Never rewrite a column id to a title or a Monday cell value. Unmatched tokens stay as literal {token} if the user proceeds.
+   - failures: PDF merge tokens cannot be rewritten. Prefer a DOCX. If they choose DOCX, remove the PDF with getsign_delete_envelope_document first, then upload the DOCX. If they keep the PDF, warn that placeholders may not be reflected as needed. Ambiguous duplicate column titles are not auto-picked — pass mappings after the user chooses. Never rewrite a column id to a title or a Monday cell value. Unmatched tokens stay as literal {token} if the user proceeds.
 3. `getsign_list_workflows_for_board`
    - requires `board_id`
    - next `getsign_get_workflow`, `getsign_ensure_board_view`, `getsign_create_workflow`
@@ -165,30 +163,25 @@ single signer.
    - requires `board_id`, `workflow_name`
    - next `getsign_ensure_board_view`, `getsign_select_template_for_workflow`, `getsign_get_workflow`
    - failures: MISSING_WORKFLOW_NAME: workflow_name was blank or whitespace-only, so nothing was created. Ask the user what to name the workflow — don't pick one yourself — then retry. The name shows on the monday board, so suggest the source document or agreement type (e.g. 'NDA - Acme Corp').
-6. `getsign_map_board_fields`
-   - **conditional — only when the PDF contains `{{Column Title}}` or `{columnId}` merge tags.** Those are board/content overlays, not signature pads. Call this tool so the backend measures tag positions (never invent x/y). Unmatched tags: remap with column_mappings from getsign_monday_item content_columns, or add a board column. Then still map signature/date fields via AI detect → save, or the editor. Generate-document automation is not required for fill. useFileColumn: pass is_template_update=false.
-   - requires `envelope_id + item_id + file_id, or template_id`, `optional column_mappings / dry_run / merge / is_template_update`
-   - next `getsign_get_document_url`, `getsign_monday_item`, `getsign_detect_placeholders_ai`
-   - failures: Pass one ID shape, not both. file_id is required on the item path. Unmatched tags need column_mappings from content_columns or a new board column. Do not send invented coordinates. Status/people/file columns are skipped unless explicitly mapped. After save, review in the editor; leftover {{}} glyphs may still show under the widget.
-7. `getsign_get_document_url`
+6. `getsign_get_document_url`
    - requires `action=edit or action=preview`, `envelope_id + item_id, or template_id + file_id`, `optional file_id on item`, `optional edit_template only for action=edit`
-   - next `getsign_detect_placeholders_ai`, `getsign_map_board_fields`, `getsign_get_signer_data`
+   - next `getsign_detect_placeholders_ai`, `getsign_get_signer_data`, `getsign_send_signature_request`
    - failures: Requires GETSIGN_APPLICATION_URL and a connected user session. Rejects an unknown action, both ID shapes, neither ID shape, and edit_template on preview. If no item document exists, attach or generate one first.
-8. `getsign_get_signer_data`
+7. `getsign_get_signer_data`
    - requires `envelope_id`, `item_id`
    - next `getsign_save_document_configuration`, `getsign_send_signature_request`, `getsign_get_document_url`
-9. `getsign_save_document_configuration`
+8. `getsign_save_document_configuration`
    - requires `action=placeholders or action=signing_order`, `placeholders (action=placeholders)`, `envelope_id + item_id + file_id or template_id (placeholders)`, `envelope_id + item_id (signing_order)`, `optional field_assignments / ordered_signers / is_template_update`
    - next `getsign_monday_item`, `getsign_get_document_url`, `getsign_get_signer_data`
-   - failures: action=placeholders: pass one ID shape, not both. merge=True fetches current fields first. field_assignments[].placeholder_id must match detect ids. assignee_column_type must be email/people/mirror-email-column — take ids from getsign_monday_item's signer_columns (or this tool's response when unassigned). Always call getsign_detect_placeholders_ai first and pass its data.placeholders through — hand-typed coordinates are accepted with no error but silently fail to render in the editor and fail to resolve a signer. action=signing_order: fails if no signers are mapped yet, if ordered_signers does not match every mapped signer, if only one signer is mapped, or if signing has already started. Reset first with getsign_reset_signing_process if you need to change order mid-flight.
-10. `getsign_send_signature_request`
+   - failures: action=placeholders: pass one ID shape, not both. merge=True fetches current fields first. field_assignments[].placeholder_id must match detect ids. assignee_column_type must be email/people/mirror-email-column — take ids from getsign_monday_item's signer_columns (or this tool's response when unassigned). Always call getsign_detect_placeholders_ai first and pass its data.placeholders through — hand-typed coordinates are accepted with no error but silently fail to render in the editor and fail to resolve a signer. action=signing_order: fails if no signers are mapped yet, if ordered_signers does not match every mapped signer, if only one signer is mapped, or if signing has already started. Reset first with getsign_reset_signing_process (starts disabled — enable it with getsign_manage_tools) if you need to change order mid-flight.
+9. `getsign_send_signature_request`
    - requires `envelope_id`, `item_id`
    - next `getsign_status`, `getsign_status`, `getsign_get_signer_data`
    - failures: CONFIRMATION_REQUIRED: show summary_text, then re-call with confirm=true and confirmation_token (same params). INVALID_CONFIRMATION_TOKEN: start over without confirm. MISSING_SIGNATURE_FIELDS: response includes next_tool=getsign_get_document_url with action=edit — call it and share the editor URL.
-11. `getsign_status`
+10. `getsign_status`
    - requires `envelope_id+item_id for history, or board_id for board actions`
    - next `getsign_download_signed_documents`, `getsign_generate_signing_link`
-12. `getsign_download_signed_documents`
+11. `getsign_download_signed_documents`
    - requires `envelope_id`, `item_id`
    - next `getsign_status`
    - failures: Fails if signing is not complete, no signed documents exist, or the signed snapshot is not ready yet. Links expire quickly and must not be shared publicly.

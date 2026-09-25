@@ -87,15 +87,15 @@ with that item's monday column values, and drops the result into a File column.
 It fires on a monday webhook: when the status column you nominate reaches the
 label you nominate, generation runs for that item.
 
-Send as a group: `statusColumnId`, `statusColumnLabel` (the status *value* that
-fires it, not the column title), `outputColumnId` (File column the result lands
-in), `outputFileType` (`pdf` or `docx`). Optional `documentNamingEnabled` +
-`documentNameTemplate` build the filename from static text and column values.
+Send as a group: `statusColumnId`, `statusColumnLabel` (prefer the numeric
+index from `status_columns.label_options`; a name like Done is converted),
+`outputColumnId` (File column the result lands in), `outputFileType`
+(`pdf` or `docx`). Optional `documentNamingEnabled` + `documentNameTemplate`
+build the filename from static text and column values.
 
 This is generation, not signing — it produces a filled document whether or not
-anyone ever signs it. It is **not** required for PDF `{{Column Title}}` /
-`{columnId}` fill: map those tags with `getsign_map_board_fields`; preview and
-signing already paint Monday values from the saved overlays.
+anyone ever signs it. Printed `{{Column Title}}` / `{columnId}` tags are not
+rewritten; map visual board fields with AI detect → save, or the editor.
 
 ### Signature collection — `signatureCollection`
 
@@ -120,10 +120,12 @@ files the signed document.
 ### Share and track — `shareAndTrack`
 
 Turns the signing invitation into a shareable link and tracks it on the board,
-optionally writing progress to `statusColumnId` / `outputColumnId`. Two
-sub-options: `isInvitationExpiryEnabled` + `expiryInMinutes` expire the link
-after a set time, and `isEmailVerificationEnabled` makes a recipient verify
-their email before the document opens.
+optionally writing progress to `statusColumnId` / `outputColumnId`. Send
+`statusColumnLabel` as the numeric index from `status_columns.label_options`
+when possible; a label name is converted before the backend webhook is
+registered. Two sub-options: `isInvitationExpiryEnabled` + `expiryInMinutes`
+expire the link after a set time, and `isEmailVerificationEnabled` makes a
+recipient verify their email before the document opens.
 
 ## Steps
 
@@ -169,8 +171,8 @@ a trigger the user never agreed to.
 Some settings must be sent as a complete group or the backend rejects them:
 
 - **Generate document** — `statusColumnId`, `statusColumnLabel`,
-  `outputColumnId`, `outputFileType` (`pdf` or `docx`). `statusColumnLabel` is
-  the status *value* that fires generation, not the column title.
+  `outputColumnId`, `outputFileType` (`pdf` or `docx`). Prefer the numeric
+  index from `status_columns.label_options`; a label name is converted.
 - **Signature collection** — `signatureCollection.isEnabled`, `fileColumnId`
   (where signed docs land), `statusColumnId`. Adding **Sign anywhere** on top
   means `enableSignAnywhere` plus `emailColumn` (one or more

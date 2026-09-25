@@ -1,9 +1,13 @@
 # Changelog
 
+## 1.2.1
+
+- Notes that `getsign_reset_signing_process` now starts disabled, where the signing-order guidance tells you to reset before changing order mid-flight. It and `getsign_start_sign_by_me` were shipping a schema on every request without being called once in a month; enable either with `getsign_manage_tools`.
+
 ## 1.2.0
 
 - First-class in Codex: ships OpenAI's `.codex-plugin/plugin.json` and a root `.agents/plugins/marketplace.json`, so `codex plugin marketplace add Getsign-JP/getsign-mcp-plugin` resolves GetSign's own listing — display name, category, and composer prompts — instead of falling back to the Claude-format index.
-- Two steps added to the document flows, so the skills no longer stop short of a document that carries merge tags: `getsign_validate_document_placeholders` checks a DOCX's `{{Column Title}}` tokens once the template is on the workflow, and `getsign_map_board_fields` fills `{{Column Title}}` / `{columnId}` tags in a PDF from the item's Monday columns.
+- A DOCX merge-tag step was added to the document flows, so the skills no longer stop short of a document that carries `{{Column Title}}` tokens: `getsign_validate_document_placeholders` checks those tokens once the template is on the workflow.
 
 ## 1.1.2
 
