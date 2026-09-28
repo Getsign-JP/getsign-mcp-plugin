@@ -84,6 +84,23 @@ walks the rest.
 Your agent also loads these on its own when what you ask matches — you do not
 have to type the slash command.
 
+## Where your data goes
+
+The skills talk to the GetSign MCP server above. Two of them also move a file
+somewhere other than that server:
+
+- **`send-new-document` uploads your document to GetSign's file storage on
+  Amazon S3.** The GetSign server hands back a short-lived pre-signed upload
+  link, and your agent sends the file to it directly with `curl -X PUT`. This
+  is how the document reaches GetSign.
+- **`save-signed-document-to-file-column` passes the signed PDF to monday.com**,
+  through a monday.com MCP connection you have added yourself, to attach it to
+  the item's File column. It does this only when the workflow is not already
+  set to file signed documents automatically.
+
+Downloading a signed document works the same way in reverse: the server returns
+a short-lived pre-signed link to GetSign's storage.
+
 ## Already connected to GetSign MCP directly?
 
 You can keep that connection. Claude Code deduplicates MCP servers by endpoint,
