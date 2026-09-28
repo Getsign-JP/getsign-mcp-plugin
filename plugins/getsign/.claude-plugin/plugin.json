@@ -24,5 +24,6 @@
     "documents",
     "signing",
     "audit-trail"
-  ]
+  ],
+  "privacyPolicyUrl": "https://getsign.io/privacy-policy"
 }
