@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2
+
+- Every skill now opens by calling `getsign_help` for its flow, so the step order it works from is the server's live one rather than whatever was cached when the plugin was installed. A host refreshes these files only when the plugin version moves, so a skill could otherwise run a recipe several releases old with nothing to show it.
+- Each manifest labels itself in the MCP server entry, and the skills report which flow they are running, so GetSign can see which clients and which plugin versions are actually in use and which skills get used at all. No document content, arguments or chat text is involved — see SECURITY.md.
+- The Claude Code manifest now links GetSign's privacy policy (`privacyPolicyUrl`), which the Claude plugin directory asks for.
+
 ## 1.2.1
 
 - Notes that `getsign_reset_signing_process` now starts disabled, where the signing-order guidance tells you to reset before changing order mid-flight. It and `getsign_start_sign_by_me` were shipping a schema on every request without being called once in a month; enable either with `getsign_manage_tools`.

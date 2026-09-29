@@ -3,15 +3,19 @@ name: "board-pending-signatures"
 description: "Find out who still hasn't signed across a monday.com board, then drill into one item's signing history and full audit trail to see where it stalled and who to chase. Use when someone says: 'who hasn't signed yet'; 'what's still pending signature'; 'chase outstanding signatures'; 'check signing status on this board'; 'is the contract signed yet'. Starts with `getsign_status`. Needs `envelope_id+item_id for history, or board_id for board actions` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_status
   - mcp__getsign__getsign_status
 metadata:
   source_flow: "board_pending_signatures"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Find out who still hasn't signed
+
+**Before anything else, call `getsign_help(flow="board_pending_signatures", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 Use this when someone asks where their signatures stand — across a whole board,
 or on one contract they are waiting on. It starts cold: all it needs is the

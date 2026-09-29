@@ -2,6 +2,11 @@
 
 E-signatures on monday.com boards, driven from chat.
 
+## Install — claude.ai and the Claude apps
+
+GetSign is listed in Anthropic's plugin directory: **Settings → Plugins →
+Discover**, search for "GetSign", and press **Add**.
+
 ## Install — Claude Code
 
 ```

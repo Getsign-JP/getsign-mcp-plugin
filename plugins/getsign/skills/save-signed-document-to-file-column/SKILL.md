@@ -3,15 +3,19 @@ name: "save-signed-document-to-file-column"
 description: "Save a signed document into a monday.com File column: check whether the workflow's Signature collection or Generate document settings already do this automatically, and if not, download the signed PDF and hand it off to a connected monday API tool to attach it to the item's File column. Use when someone says: 'save the signed document in the files column'; 'save this to the file column'; 'attach the signed pdf to this item'; 'put the signed contract back on the board'; 'upload the signed doc to the files column'. Starts with `getsign_download_signed_documents`. Needs `envelope_id`, `item_id` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_download_signed_documents
   - mcp__getsign__getsign_download_signed_documents
 metadata:
   source_flow: "save_signed_document_to_file_column"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Save a signed document into a monday File column
+
+**Before anything else, call `getsign_help(flow="save_signed_document_to_file_column", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 Someone finishes a signature request and asks to have the signed copy land in a
 File column on the board, alongside (or instead of) sending a download link.

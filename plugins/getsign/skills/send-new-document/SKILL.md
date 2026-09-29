@@ -3,6 +3,8 @@ name: "send-new-document"
 description: "Send a document that has no GetSign template yet out for signature from a monday.com board: upload it, attach it to a signing workflow, map the signature fields, point them at a signer column, send, then track through to the signed copy. Use when someone says: 'send this for signature'; 'get this signed'; 'send the contract out for signing'; 'send this NDA to the client to sign'; 'email this document for a signature'. Starts with `getsign_create_template`. Needs `file_name`, `content_type` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_create_template
   - mcp__getsign__getsign_create_template
   - mcp__plugin_getsign_getsign__getsign_validate_document_placeholders
@@ -28,10 +30,12 @@ allowed-tools:
 metadata:
   source_flow: "send_new_document"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Send a new document for signature
+
+**Before anything else, call `getsign_help(flow="send_new_document", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 Use this when the user has a document that GetSign has never seen before — a
 PDF or DOCX on disk, in a monday.com File column, or one they are about to

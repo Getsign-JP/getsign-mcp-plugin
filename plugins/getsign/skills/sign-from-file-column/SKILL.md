@@ -3,6 +3,8 @@ name: "sign-from-file-column"
 description: "Send a document that already sits in a monday.com board File column for signature, with no GetSign template: switch the workflow to Use stored document, point it at that File column, then map the signature fields on the item's own file and send. Use when someone says: 'sign the file that's already on the item'; 'use the document from the files column'; 'we upload contracts to a monday file column'; 'sign a stored document'; 'there's no template, the PDF is on the board'. Starts with `getsign_list_workflows_for_board`. Needs `board_id` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_list_workflows_for_board
   - mcp__getsign__getsign_list_workflows_for_board
   - mcp__plugin_getsign_getsign__getsign_monday_item
@@ -24,10 +26,12 @@ allowed-tools:
 metadata:
   source_flow: "sign_from_file_column"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Sign a document straight from a monday File column
+
+**Before anything else, call `getsign_help(flow="sign_from_file_column", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 Some teams never use GetSign templates. The contract is produced somewhere else
 and dropped into a File column on the monday item, and what they want is "send

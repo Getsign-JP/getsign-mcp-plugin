@@ -3,6 +3,8 @@ name: "create-or-update-workflow"
 description: "Create a GetSign signing workflow on a monday.com board, or change an existing one's settings — sender identity and email, reminders, OTP, document generation, signature collection, share and track, or sourcing the document from a board File column. Use when someone says: 'create a getsign workflow'; 'set up a signing workflow on this board'; 'change the workflow settings'; 'update the sender email on this workflow'; 'enable sign anywhere'. Starts with `getsign_list_workflows_for_board`. Needs `board_id` to begin; ask for what is missing rather than guessing."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_list_workflows_for_board
   - mcp__getsign__getsign_list_workflows_for_board
   - mcp__plugin_getsign_getsign__getsign_ensure_board_view
@@ -18,10 +20,12 @@ allowed-tools:
 metadata:
   source_flow: "create_or_update_workflow"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Create or update a signing workflow
+
+**Before anything else, call `getsign_help(flow="create_or_update_workflow", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 A *workflow* is what GetSign calls an envelope: the board-level configuration
 that decides who a document goes to, what the email says, and which monday

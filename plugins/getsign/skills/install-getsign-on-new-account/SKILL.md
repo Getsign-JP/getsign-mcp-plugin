@@ -3,6 +3,8 @@ name: "install-getsign-on-new-account"
 description: "Set up GetSign on a monday.com account for the first time: check whether the app is installed, hand the account admin a single link that covers both monday's install screen and OAuth consent, then confirm the connection works and add a GetSign board view. Use when someone says: 'set up getsign'; 'install getsign on monday'; 'connect my monday account to getsign'; 'getsign isn't installed'; 'onboard my account'. Starts with `getsign_account`. Needs no prior context — safe to run cold."
 license: "MIT"
 allowed-tools:
+  - mcp__plugin_getsign_getsign__getsign_help
+  - mcp__getsign__getsign_help
   - mcp__plugin_getsign_getsign__getsign_account
   - mcp__getsign__getsign_account
   - mcp__plugin_getsign_getsign__getsign_connect
@@ -16,10 +18,12 @@ allowed-tools:
 metadata:
   source_flow: "install_getsign_on_new_account"
   generated_from: "FLOWS in getsign_mcp/services/skills.py"
-  getsign_mcp_version: "0.1.0"
+  getsign_mcp_version: "1.2.0"
 ---
 
 # Set up GetSign on a monday.com account
+
+**Before anything else, call `getsign_help(flow="install_getsign_on_new_account", source="skill")`.** It returns this flow's live step order from the server. That is the canonical one — the steps below were cached when the plugin was installed, so prefer the server's if they disagree. The call also records which skill ran, so these steps can be improved from how they actually go; it sends no document content and no chat text. Then work through the steps in order.
 
 Use this when GetSign is not connected yet — a new account, a fresh workspace,
 or a session where the tools come back unauthorized.

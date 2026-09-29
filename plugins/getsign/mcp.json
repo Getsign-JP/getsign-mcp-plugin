@@ -3,7 +3,11 @@
   "mcpServers": {
     "getsign": {
       "type": "streamable-http",
-      "url": "https://mcp.getsign.io/mcp"
+      "url": "https://mcp.getsign.io/mcp",
+      "headers": {
+        "x-getsign-surface": "agent-plugin",
+        "x-getsign-plugin-version": "1.2.2"
+      }
     }
   }
 }

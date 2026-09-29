@@ -2,7 +2,11 @@
   "mcpServers": {
     "getsign": {
       "type": "http",
-      "url": "https://mcp.getsign.io/mcp"
+      "url": "https://mcp.getsign.io/mcp",
+      "headers": {
+        "x-getsign-surface": "claude-plugin",
+        "x-getsign-plugin-version": "1.2.2"
+      }
     }
   }
 }
